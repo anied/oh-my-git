@@ -8,7 +8,7 @@ if [ -n "${BASH_VERSION}" ]; then
     : ${omg_ungit_prompt:=$PS1}
     : ${omg_second_line:=$PS1}
 
-    : ${omg_is_a_git_repo_symbol:=''}
+    : ${omg_is_a_git_repo_symbol:="\u$CODEPOINT_OF_AWESOME_GITHUB_ALT"}
     : ${omg_has_untracked_files_symbol:=''}        #                ?    
     : ${omg_has_adds_symbol:=''}
     : ${omg_has_deletions_symbol:=''}
@@ -16,16 +16,16 @@ if [ -n "${BASH_VERSION}" ]; then
     : ${omg_has_modifications_symbol:=''}
     : ${omg_has_cached_modifications_symbol:=''}
     : ${omg_ready_to_commit_symbol:=''}            #   →
-    : ${omg_is_on_a_tag_symbol:=''}                #   
+    : ${omg_is_on_a_tag_symbol:="\u$CODEPOINT_OF_AWESOME_TAG"}                #   
     : ${omg_needs_to_merge_symbol:='ᄉ'}
-    : ${omg_detached_symbol:=''}
+    : ${omg_detached_symbol:="\u$CODEPOINT_OF_AWESOME_CHAIN_BROKEN"}
     : ${omg_can_fast_forward_symbol:=''}
     : ${omg_has_diverged_symbol:=''}               #   
-    : ${omg_not_tracked_branch_symbol:=''}
+    : ${omg_not_tracked_branch_symbol:="\u$CODEPOINT_OF_AWESOME_LAPTOP"}
     : ${omg_rebase_tracking_branch_symbol:=''}     #   
     : ${omg_merge_tracking_branch_symbol:=''}      #  
     : ${omg_should_push_symbol:=''}                #    
-    : ${omg_has_stashes_symbol:=''}
+    : ${omg_has_stashes_symbol:="\u$CODEPOINT_OF_AWESOME_STAR"}
 
     : ${omg_default_color_on:='\[\033[1;37m\]'}
     : ${omg_default_color_off:='\[\033[0m\]'}
@@ -40,7 +40,7 @@ if [ -n "${BASH_VERSION}" ]; then
         local color=${3:-$omg_default_color_on}
         if [[ $flag == false ]]; then symbol=' '; fi
 
-        echo -n "${color}${symbol}  "
+        echo -n -e "${color}${symbol}  "
     }
 
     function custom_build_prompt {
@@ -128,7 +128,7 @@ if [ -n "${BASH_VERSION}" ]; then
 
             # where
 
-            prompt="${prompt} ${white_on_red} ${black_on_red}"
+            prompt="${prompt} ${white_on_red}\u$CODEPOINT_OF_AWESOME_CHEVRON_RIGHT ${black_on_red}"
             if [[ $detached == true ]]; then
                 prompt+=$(enrich_append $detached $omg_detached_symbol "${white_on_red}")
                 prompt+=$(enrich_append $detached "(${current_commit_hash:0:7})" "${black_on_red}")
@@ -160,7 +160,7 @@ if [ -n "${BASH_VERSION}" ]; then
                 fi
             fi
             prompt+=$(enrich_append ${is_on_a_tag} "${omg_is_on_a_tag_symbol} ${tag_at_current_commit}" "${black_on_red}")
-            prompt+="${omg_last_symbol_color}${reset}\n"
+            prompt+="${omg_last_symbol_color}\u$CODEPOINT_OF_AWESOME_CHEVRON_RIGHT${reset}\n"
             prompt+="$(eval_prompt_callback_if_present)"
             prompt+="${omg_second_line}"
         else
@@ -168,7 +168,7 @@ if [ -n "${BASH_VERSION}" ]; then
             prompt+="${omg_ungit_prompt}"
         fi
 
-        echo "${prompt}"
+        echo -e "${prompt}"
     }
     
     PS2="${yellow}→${reset} "
